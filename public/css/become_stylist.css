@@ -1,0 +1,221 @@
+.stylist-form {
+    max-width: 700px;
+    margin: 2em auto;
+    padding: 1.5em;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.stylist-form h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 1em 0;
+}
+
+.photo-slot {
+    width: 100%;
+    padding-top: 100%;
+    background: #f0f0f0;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 1.2em;
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.7em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.btn-primary {
+    flex: 1;
+    background: #007BFF;
+    color: white;
+    border: none;
+    padding: 0.8em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-secondary {
+    flex: 1;
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 0.8em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* タグUI */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 0.5em;
+}
+
+.tag {
+    background: #007BFF;
+    color: white;
+    padding: 0.3em 0.8em;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+/* プレビュー全体 */
+.photo-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 各プレビュー枠 + 追加ボタン */
+.preview-item,
+.add-photo {
+    flex: 0 0 calc(25% - 7.5px); /* 1行4枚 */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+/* 画像 */
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* 追加ボタン */
+.add-photo {
+    font-size: 32px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+/* 削除ボタン */
+.remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.remove-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 2em; /* カウントの分の余白を確保 */
+}
+
+/* 文字数カウントを枠の外の右下に表示 */
+.char-count {
+    text-align: right;
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 4px;
+}
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px; /* 上にスペースを追加 */
+  }
+  
+  .tag {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .tag span {
+    margin-left: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .input-wrapper {
+    position: relative;
+    margin-bottom: 10px; /* 下に余白を追加してタグと離す */
+  }
+  
+  #tag-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #tag-count {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 0.85em;
+    color: #555;
+  }

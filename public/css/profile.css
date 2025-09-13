@@ -1,0 +1,84 @@
+  /* プロフィール */
+  main {
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 1.5em;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mypage-form h2 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+  
+  .mypage-form label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+  }
+  
+  .mypage-form input[type="text"],
+  .mypage-form textarea {
+    width: 100%;
+    padding: 0.7em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+  }
+  
+  .mypage-form button {
+    width: 100%;
+    padding: 0.8em;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .mypage-form button:hover {
+    background-color: #0056b3;
+  }
+
+  /*円形処理*/
+  .profile-image-area {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1em;
+  }
+  
+  .circle-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .circle-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display:block; /* 最初は非表示 */
+  }
+  
+  /* カスタムファイル選択ボタン */
+  .image-upload-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+  }
