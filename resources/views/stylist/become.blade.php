@@ -74,157 +74,132 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-const inputPhotos = document.getElementById('photos');
-const previewContainer = document.getElementById('photo-preview');
+$(function () {
+    const $inputPhotos = $('#photos');
+    const $previewContainer = $('#photo-preview');
+    const maxPhotos = 8;
 
-// Sortable 初期化（ドラッグ可能）
-new Sortable(previewContainer, {
-    animation: 150,
-    ghostClass: 'sortable-ghost'
-});
+    // Sortable 初期化
+    new Sortable($previewContainer[0], {
+        animation: 150,
+        ghostClass: 'sortable-ghost'
+    });
 
-// ファイル追加
-inputPhotos.addEventListener('change', function(event) {
-    const files = Array.from(event.target.files);
-    const existingCount = previewContainer.querySelectorAll('.preview-item').length;
-    const remainingSlots = 8 - existingCount; // 残り枠
+    // ファイル追加
+    $inputPhotos.on('change', function (event) {
+        const files = Array.from(event.target.files);
+        const existingCount = $previewContainer.find('.preview-item').length;
+        const remainingSlots = maxPhotos - existingCount;
 
-    files.slice(0, remainingSlots).forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const div = document.createElement('div');
-            div.classList.add('preview-item');
+        files.slice(0, remainingSlots).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const $div = $('<div>').addClass('preview-item');
+                const $img = $('<img>').attr('src', e.target.result);
+                const $removeBtn = $('<span>')
+                    .addClass('remove-btn')
+                    .text('×')
+                    .on('click', function () {
+                        $div.remove();
+                        updateAddPhotoVisibility();
+                        adjustPreviewHeight();
+                    });
 
-            const img = document.createElement('img');
-            img.src = e.target.result;
+                $div.append($img).append($removeBtn);
+                $previewContainer.find('.add-photo').before($div);
 
-            const removeBtn = document.createElement('span');
-            removeBtn.classList.add('remove-btn');
-            removeBtn.innerText = '×';
-            removeBtn.addEventListener('click', () => {
-                div.remove();
                 updateAddPhotoVisibility();
-                adjustPreviewHeight(); // 高さ調整が必要なら呼ぶ
-            });
+                adjustPreviewHeight();
+            };
+            reader.readAsDataURL(file);
+        });
 
-            div.appendChild(img);
-            div.appendChild(removeBtn);
-
-            const addBtn = previewContainer.querySelector('.add-photo');
-            previewContainer.insertBefore(div, addBtn);
-
-            updateAddPhotoVisibility();
-            adjustPreviewHeight(); // 高さ調整が必要なら呼ぶ
-        };
-        reader.readAsDataURL(file);
+        $(this).val(''); // inputをリセット
     });
 
-    event.target.value = ''; // inputをリセット
-});
+    // 追加ボタンの表示制御
+    function updateAddPhotoVisibility() {
+        const $addBtn = $previewContainer.find('.add-photo');
+        $addBtn.css('display', $previewContainer.find('.preview-item').length >= maxPhotos ? 'none' : 'flex');
+    }
 
+    // プレビュー枠を正方形に調整
+    function adjustPreviewHeight() {
+        $previewContainer.find('.preview-item, .add-photo').each(function () {
+            const width = $(this).outerWidth();
+            $(this).css('height', width + 'px');
+        });
+    }
 
-// 追加ボタンの表示制御
-function updateAddPhotoVisibility() {
-    const addBtn = previewContainer.querySelector('.add-photo');
-    addBtn.style.display = previewContainer.querySelectorAll('.preview-item').length >= 8 ? 'none' : 'flex';
-}
+    // 初期調整
+    adjustPreviewHeight();
+    $(window).on('resize', adjustPreviewHeight);
 
-// プレビュー枠を正方形に調整
-function adjustPreviewHeight() {
-    const items = document.querySelectorAll('.preview-item, .add-photo');
-    items.forEach(item => {
-        const width = item.offsetWidth;
-        item.style.height = width + 'px';
-    });
-}
+    /* ==============================
+       タグ入力機能
+    ============================== */
+    const $input = $('#tag-input');
+    const $tagsContainer = $('#tags');
+    const $tagCount = $('#tag-count');
+    let tags = [];
+    const maxTags = 15;
 
-// 初期調整
-adjustPreviewHeight();
-window.addEventListener('resize', adjustPreviewHeight);
+    function updateTags() {
+        $tagsContainer.empty();
+        $.each(tags, function (index, tag) {
+            const $tagEl = $('<div>').addClass('tag').text(tag);
+            const $removeBtn = $('<span>')
+                .text('×')
+                .on('click', function () {
+                    tags.splice(index, 1);
+                    updateTags();
+                });
 
+            $tagEl.append($removeBtn);
+            $tagsContainer.append($tagEl);
+        });
+        $tagCount.text(tags.length + '/' + maxTags);
+    }
 
+    function addTag(tag) {
+        tag = tag.trim();
+        if (tag && !tags.includes(tag) && tags.length < maxTags) {
+            tags.push(tag);
+            updateTags();
+        }
+    }
 
-    const input = document.getElementById("tag-input");
-    const container = document.getElementById("tag-container");
-
-    input.addEventListener("keypress", function(e) {
-        if (e.key === "Enter") {
+    $input.on('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
-            const value = input.value.trim();
-            if (value) {
-                const tag = document.createElement("span");
-                tag.className = "tag";
-                tag.textContent = value;
-                container.appendChild(tag);
-                input.value = "";
-            }
+            addTag($input.val());
+            $input.val('');
         }
     });
 
+    /* ==============================
+       文字数カウント制御
+    ============================== */
     function setupCharCount(textareaId, countId, maxLength) {
-    const textarea = document.getElementById(textareaId);
-    const countDisplay = document.getElementById(countId);
+        const $textarea = $('#' + textareaId);
+        const $countDisplay = $('#' + countId);
 
-    textarea.addEventListener('input', () => {
-        if (textarea.value.length > maxLength) {
-            textarea.value = textarea.value.slice(0, maxLength); // 強制カット
-        }
-        countDisplay.innerText = `${textarea.value.length}/${maxLength}`;
-    });
-}
+        $textarea.on('input', function () {
+            if ($textarea.val().length > maxLength) {
+                $textarea.val($textarea.val().slice(0, maxLength));
+            }
+            $countDisplay.text($textarea.val().length + '/' + maxLength);
+        });
+    }
 
-// スタイリスト概要（40文字）
-setupCharCount('overview', 'overview-count', 40);
+    // スタイリスト概要（40文字）
+    setupCharCount('overview', 'overview-count', 40);
 
-// アピール（1000文字）
-setupCharCount('appeal', 'appeal-count', 1000);
-
-// タグ制限
-const inpu = document.getElementById('tag-input'); //
-const tagsContainer = document.getElementById('tags');
-const tagCount = document.getElementById('tag-count');
-
-let tags = [];
-const maxTags = 15;
-
-function updateTags() {
-  tagsContainer.innerHTML = '';
-  tags.forEach((tag, index) => {
-    const tagEl = document.createElement('div');
-    tagEl.classList.add('tag');
-    tagEl.textContent = tag;
-
-    const removeBtn = document.createElement('span');
-    removeBtn.textContent = '×';
-    removeBtn.onclick = () => {
-      tags.splice(index, 1);
-      updateTags();
-    };
-
-    tagEl.appendChild(removeBtn);
-    tagsContainer.appendChild(tagEl);
-  });
-  tagCount.textContent = `${tags.length}/${maxTags}`;
-}
-
-function addTag(tag) {
-  tag = tag.trim();
-  if(tag && !tags.includes(tag) && tags.length < maxTags) {
-    tags.push(tag);
-    updateTags();
-  }
-}
-
-input.addEventListener('keydown', function(e) {
-  if(e.key === 'Enter' || e.key === ',') {
-    e.preventDefault();          
-    addTag(input.value);         // タグを追加
-    input.value = '';            // 入力欄を空にする
-  }
+    // アピール（1000文字）
+    setupCharCount('appeal', 'appeal-count', 1000);
 });
-
-
-
 </script>
+
 @endsection
