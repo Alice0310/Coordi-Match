@@ -81,7 +81,7 @@ $(function () {
     const $previewContainer = $('#photo-preview');
     const maxPhotos = 8;
 
-    // Sortable 初期化
+    // Sortable初期化
     new Sortable($previewContainer[0], {
         animation: 150,
         ghostClass: 'sortable-ghost'
