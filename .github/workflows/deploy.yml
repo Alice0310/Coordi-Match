@@ -3,7 +3,7 @@ name: Deploy to Sakura Server
 on:
   push:
     branches:
-      - main   # mainブランチにpushされたら実行
+      - main
 
 jobs:
   deploy:
@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/www/laravel-app  # あなたのサーバー上のアプリのディレクトリに合わせて変更
+            cd /home/alice-0309/coordi_match
             git pull origin main
             composer install --no-dev --optimize-autoloader
             php artisan migrate --force
