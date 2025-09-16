@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Stylist extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'photos',
+        'overview',
+        'genres',
+        'appeal',
+        'twitter',
+        'instagram',
+        'price',
+        'status',
+    ];
+
+    protected $casts = [
+        'photos' => 'array',
+        'genres' => 'array',
+    ];
+}
