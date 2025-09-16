@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\StylistController;
 
 Route::get('/', function () {
     return view('index');
@@ -50,7 +51,10 @@ Route::middleware(['auth'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-//stylist登録見た目test
-Route::get('/become_stylist', function () {
-    return view('stylist.become');
-})->name('stylist.become');
+Route::middleware('auth')->group(function () {
+    // スタイリスト登録ページ表示（既存情報も表示）
+    Route::get('/become', [StylistController::class, 'become'])->name('become.stylist');
+
+    // スタイリスト情報保存・更新（updateOrCreate）
+    Route::post('/become', [StylistController::class, 'storeOrUpdate'])->name('stylists.store_or_update');
+});

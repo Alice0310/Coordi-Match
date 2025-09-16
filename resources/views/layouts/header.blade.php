@@ -25,7 +25,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">マイページ</a></li>
                         <li><a href="{{ route('user.profile.edit') }}">プロフィール</a></li>
-                        <li><a href="#" id="become-stylist-btn">スタイリストになる</a></li>
+                        <li><a href="{{ route('become.stylist') }}" id="become-stylist-btn">スタイリストになる</a></li>
                         <li>
                         <!-- 非表示フォーム -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
