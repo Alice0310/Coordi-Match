@@ -8,9 +8,16 @@ use App\Models\Stylist;
 
 class StylistController extends Controller
 {
-    public function index()
+    public function list()
     {
-        //
+        $stylists = Stylist::where('status', 'published')->get();
+        return view('stylist.list', compact('stylists'));
+    }
+
+    public function detail($id)
+    {
+        $stylist = Stylist::findOrFail($id);
+        return view('stylist.detail', compact('stylist'));
     }
 
     public function become()

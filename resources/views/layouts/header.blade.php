@@ -40,7 +40,7 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="#">スタイリスト一覧</a></li>
+                <li><a href="{{ route('stylist.list') }}">スタイリスト一覧</a></li>
                 <li><a href="#"><span class="icon">🔔</span></a></li>
                 <li><a href="#"><span class="icon">✅</span></a></li>
                 <li><a href="#"><span class="icon">⭐ 気になる</span></a></li>
