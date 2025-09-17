@@ -1,0 +1,92 @@
+.stylist-detail-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 20px auto;
+    gap: 30px;
+  }
+  
+  .left-side {
+    flex: 1;
+  }
+  
+  .mainSwiper {
+    width: 100%;
+    max-width: 500px;   /* ← 横幅の上限を決める */
+    height: auto;       /* ← 固定高さをやめる */
+    aspect-ratio: 1/1;  /* ← 正方形にしたい場合 */
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  /* wrapperの高さをリセット */
+  .thumbSwiper .swiper-wrapper {
+    height: auto !important;
+  }
+  
+  .mainSwiper .swiper-slide img {
+    background: #f9f9f9;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .thumbSwiper {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 10px;
+    position: relative;
+  }
+  
+  .thumbSwiper .swiper-slide {
+    background: #eee;
+    width: 80px;         
+    height: 80px;         
+    flex-shrink: 0;
+    opacity: 0.6;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  .thumbSwiper .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+  
+  .thumbSwiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* 矢印を小さくカスタマイズ */
+  .thumbSwiper .swiper-button-next,
+  .thumbSwiper .swiper-button-prev {
+    top: 60px;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    color: #fff;
+    z-index: 10;
+  }
+
+  .thumbSwiper .swiper-button-next:after,
+  .thumbSwiper .swiper-button-prev:after {
+    font-size: 12px;
+  }
+  
+  .no-photo {
+    width: 100%;
+    height: 500px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    border-radius: 10px;
+  }
+  
+  .right-side {
+    flex: 1;
+  }
+  

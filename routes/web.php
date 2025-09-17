@@ -58,3 +58,9 @@ Route::middleware('auth')->group(function () {
     // スタイリスト情報保存・更新（updateOrCreate）
     Route::post('/become', [StylistController::class, 'storeOrUpdate'])->name('stylists.store_or_update');
 });
+
+// スタイリスト一覧
+Route::get('/stylist/list', [StylistController::class, 'list'])->name('stylist.list');
+
+// 詳細ページ
+Route::get('/stylist/{id}', [StylistController::class, 'detail'])->name('stylist.detail');
