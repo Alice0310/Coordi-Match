@@ -3,16 +3,29 @@ name: Deploy to Sakura Server
 on:
   push:
     branches:
-      - main
+      - main   # mainブランチにpushされたら実行
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # ソースコード取得
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # PHP + Composer セットアップ
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'   # サーバーに合わせる（例: 8.1）
+          tools: composer
+
+      # 依存関係インストール（サーバーに vendor を送る）
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # サーバーにデプロイ
       - name: Deploy to Sakura Server
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -20,9 +33,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/alice-0309/coordi_match
+            cd ${{ secrets.DEPLOY_PATH }}
             git pull origin main
-            composer install --no-dev --optimize-autoloader
             php artisan migrate --force
             php artisan config:cache
             php artisan route:cache
