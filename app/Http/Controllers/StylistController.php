@@ -39,7 +39,7 @@ class StylistController extends Controller
         'twitter'     => 'nullable|url',
         'instagram'   => 'nullable|url',
         'price'       => 'nullable|integer',
-        'photos.*'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'photos.*'    => 'nullable|image|mimes:jpg,jpeg,png',
         'genres'      => 'nullable',
         'photo_order' => 'nullable|string',
     ]);

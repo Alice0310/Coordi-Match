@@ -1,0 +1,192 @@
+/* コンテナ全体 */
+.transaction-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  
+  /* 見出し */
+  .transaction-container h2 {
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+  }
+  
+  /* 基本情報 */
+  .transaction-container p {
+    margin: 8px 0;
+    color: #333;
+    font-size: 1em;
+  }
+  
+  /* ボタンエリア */
+  .actions {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+    transition: background 0.2s ease;
+  }
+  
+  .btn-primary {
+    background: #007bff;
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background: #0056b3;
+  }
+  
+  .btn-secondary {
+    background: #6c757d;
+    color: #fff;
+  }
+  
+  .btn-secondary:hover {
+    background: #545b62;
+  }
+  
+  /* モーダル全体 */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+  
+  /* 表示状態 */
+  .modal.show {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* モーダルの中身 */
+  .modal-content {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  
+  .modal-content h3 {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+  }
+  
+  /* メッセージ欄 */
+  /* メッセージセクション全体 */
+#message-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fafafa;
+  }
+  
+  /* メッセージリスト */
+  .message-list {
+    max-height: 400px;       /* スクロール可能にする */
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding-right: 10px;
+  }
+  
+  /* メッセージ１つ分 */
+  .message-item {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 75%;
+    word-wrap: break-word;
+    font-size: 14px;
+  }
+  
+  /* 自分のメッセージ */
+  .message-item.me {
+    background-color: #d1e7ff;
+    margin-left: auto;
+    display: block;
+    text-align: right;
+  }
+  
+  /* 相手のメッセージ */
+  .message-item.other {
+    background-color: #f1f1f1;
+    margin-right: auto;
+    display: block;
+    text-align: left;
+  }
+  
+  /* ユーザー名 */
+  .message-item strong {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 3px;
+  }
+  
+  /* 時間 */
+  .message-item .time {
+    display: block;
+    font-size: 11px;
+    color: #999;
+    margin-top: 3px;
+  }
+  
+  /* 入力フォーム */
+  #message-section form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  #message-section textarea {
+    flex: 1;
+    resize: none;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  #message-section button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  #message-section button:hover {
+    background: #0056b3;
+  }

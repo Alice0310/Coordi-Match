@@ -90,3 +90,138 @@
     flex: 1;
   }
   
+  .section-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 15px 0 5px;
+    color: #333;
+  }
+
+  .action-buttons {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .action-buttons .btn {
+    padding: 10px 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+  }
+  
+  .comment-section {
+    margin-top: 40px;
+  }
+  .comment-section textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .comment-item {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .sns-links a {
+    margin: 0 5px;
+    color: #0077cc;
+    text-decoration: none;
+  }
+  
+  .sns-links a:hover {
+    text-decoration: underline;
+  }
+  
+  /* モーダル本体 */
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+  }
+  
+  #alert-area {
+    margin: 15px 0;
+    text-align: center;
+  }
+  .alert {
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .alert-success {
+    background: #e6ffed;
+    color: #2e7d32;
+    border: 1px solid #81c784;
+  }
+  .alert-danger {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6); /* 半透明の背景 */
+    z-index: 1000;
+  
+    display: flex;  /* flexで中央寄せ */
+    align-items: center;
+    justify-content: center;
+  
+    visibility: hidden;  /* 最初は見えない */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* 表示時に適用するクラス */
+  .modal.show {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* コメント削除ボタン */
+.btn-danger {
+    background: #e53935;
+    border: none;
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .btn-danger:hover {
+    background: #c62828;
+  }
