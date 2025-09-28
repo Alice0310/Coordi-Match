@@ -1,0 +1,47 @@
+.clothes-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.image-upload-wrapper {
+    display: flex;
+    flex-wrap: wrap;   /* 横並び → 自動折り返し */
+    gap: 10px;         /* 画像同士の隙間 */
+    max-width: 800px;  /* 横幅の最大値（調整可） */
+    margin-bottom: 20px;
+}
+
+.preview-item, 
+.add-photo {
+    width: calc(10% - 10px); /* 10列に並ぶ計算 */
+    aspect-ratio: 1 / 1;     /* 正方形を維持 */
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    position: relative;
+    cursor: pointer;
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

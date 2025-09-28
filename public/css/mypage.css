@@ -1,0 +1,52 @@
+.mypage-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+  
+  .mypage-sidebar {
+    width: 250px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .profile-card {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-list li {
+    margin: 10px 0;
+  }
+  
+  .menu-list a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .menu-list a:hover {
+    color: #007bff;
+  }
+  
+  .mypage-main {
+    flex: 1;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+  }

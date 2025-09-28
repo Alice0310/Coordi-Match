@@ -25,4 +25,15 @@ class Stylist extends Model
         'photos' => 'array',
         'genres' => 'array',
     ];
+
+        // コメントとのリレーションを追加
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

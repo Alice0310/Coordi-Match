@@ -92,3 +92,18 @@
   .dropdown-menu li a:hover {
     background-color: #f0f0f0;
   }
+  .notification-bell {
+    position: relative;
+  }
+  
+  .notification-bell .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7em;
+    padding: 2px 6px;
+  }
+  

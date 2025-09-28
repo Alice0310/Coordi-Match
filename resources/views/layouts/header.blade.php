@@ -23,7 +23,7 @@
                         {{ Auth::user()->nickname ?? 'ユーザー名' }} ▾
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">マイページ</a></li>
+                        <li><a href="{{ route('mypage.index') }}">マイページ</a></li>
                         <li><a href="{{ route('user.profile.edit') }}">プロフィール</a></li>
                         <li><a href="{{ route('become.stylist') }}" id="become-stylist-btn">スタイリストになる</a></li>
                         <li>
@@ -41,7 +41,14 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('stylist.list') }}">スタイリスト一覧</a></li>
-                <li><a href="#"><span class="icon">🔔</span></a></li>
+                <li class="notification-bell">
+                <a href="{{ route('notifications.index') }}">
+                    <span class="icon">🔔</span>
+                    @if($unreadCount > 0)
+                    <span class="badge">{{ $unreadCount }}</span>
+                    @endif
+                </a>
+                </li>
                 <li><a href="#"><span class="icon">✅</span></a></li>
                 <li><a href="#"><span class="icon">⭐ 気になる</span></a></li>
             </ul>
