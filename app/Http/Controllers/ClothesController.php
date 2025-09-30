@@ -61,4 +61,15 @@ class ClothesController extends Controller
     $clothes = $user->clothes()->where('is_active', true)->get();
     return view('clothes.user_index', compact('user', 'clothes'));
     }
+
+    public function destroy($id)
+{
+    $cloth = auth()->user()->clothes()->findOrFail($id);
+
+    // 論理削除
+    $cloth->is_active = false;
+    $cloth->save();
+
+    return back()->with('success', '服を削除しました！');
+}
 }

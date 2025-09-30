@@ -123,3 +123,16 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/users/{id}/clothes', [App\Http\Controllers\ClothesController::class, 'showUserClothes'])
     ->name('clothes.user');
+
+// 持ち服画像削除
+Route::delete('/clothes/{id}', [ClothesController::class, 'destroy'])->name('clothes.destroy');
+
+// 終了ボタン
+Route::post('/trades/{id}/request-complete', [TradeController::class, 'requestComplete'])->name('trades.requestComplete');
+Route::post('/trades/{id}/confirm-complete', [TradeController::class, 'confirmComplete'])->name('trades.confirmComplete');
+
+// 終了通知（スタイリスト）
+Route::post('/trades/{id}/complete-request', [TradeController::class, 'requestComplete'])
+    ->name('trades.requestComplete');
+
+Route::get('/stylists/{id}', [StylistController::class, 'show'])->name('stylists.show');

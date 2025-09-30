@@ -161,4 +161,11 @@ class StylistController extends Controller
         $stylist->delete();
         return redirect()->route('stylists.index')->with('success', 'スタイリストを削除しました');
     }
+
+    public function show($id)
+    {
+    $stylist = Stylist::with('user', 'comments.user')->findOrFail($id);
+
+    return view('stylist.detail', compact('stylist'));
+    }
 }

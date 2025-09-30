@@ -25,16 +25,17 @@ class CommentController extends Controller
 
         // 🔔 通知を保存
         Notification::create([
-            'user_id' => $stylist->user_id,
-            'type'    => 'comment',
-            'data'    => [
-                'from_user'  => auth()->user()->name,
-                'comment_id' => $comment->id,
-                'message'    => auth()->user()->name . ' さんがコメントしました。',
-                'stylist_id' => $stylist->id,
-            ],
-            'is_read' => false,
-        ]);
+    'user_id' => $stylist->user_id,
+    'type'    => 'comment',
+    'data'    => [
+        'from_user'  => auth()->user()->nickname ?? auth()->user()->name,
+        'comment_id' => $comment->id,
+        'message'    => (auth()->user()->nickname ?? auth()->user()->name) . ' さんがコメントしました。',
+        'stylist_id' => $stylist->id,
+        'url'        => route('stylists.show', $stylist->id), // ← detail ページへのリンク
+    ],
+    'is_read' => false,
+]);
 
         return back()->with('success', 'コメントを送信しました！');
     }
