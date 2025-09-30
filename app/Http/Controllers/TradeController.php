@@ -15,7 +15,7 @@ class TradeController extends Controller
         $trade = Trade::with(['stylist.user', 'user'])->findOrFail($id);
 
         $messages = TradeMessage::where('trade_id', $trade->id)
-            ->with('user')
+            ->with(['user', 'photos'])
             ->orderBy('created_at', 'asc')
             ->get();
     
@@ -35,13 +35,11 @@ class TradeController extends Controller
 
     // 2. 通知を保存
     Notification::create([
-        'user_id' => $stylist->user_id, // 通知を受け取るのはスタイリスト本人
+        'user_id' => $stylist->user_id,
         'type'    => 'trade_request',
         'data'    => [
-            'from_user' => auth()->user()->nickname ?? auth()->user()->name,
-            'message'   => (auth()->user()->nickname ?? auth()->user()->name) . ' さんが取引申請しました。',
-            'stylist_id'=> $stylist->id,
-            'trade_id'  => $trade->id, // ← Trade 作成後なのでOK
+            'message' => (auth()->user()->nickname ?? auth()->user()->name) . ' さんが取引申請しました。',
+            'url'     => route('trades.show', $trade->id), // ← URL追加
         ],
         'is_read' => false,
     ]);
@@ -70,10 +68,9 @@ class TradeController extends Controller
         'user_id' => $trade->user_id, // 申請した人に通知
         'type'    => 'trade_approved',
         'data'    => [
-            'from_user' => $trade->stylist->user->nickname ?? $trade->stylist->user->name,
-            'message' => ($trade->stylist->user->nickname ?? 'スタイリスト') . ' さんが取引を承認しました！',
-            'trade_id'=> $trade->id,
-        ],
+        'message' => ($trade->stylist->user->nickname ?? 'スタイリスト') . ' さんが取引を承認しました！',
+        'url'     => route('trades.show', $trade->id),
+    ],
         'is_read' => false,
     ]);
 
@@ -93,29 +90,121 @@ class TradeController extends Controller
     public function sendMessage(Request $request, $id)
     {
     $request->validate([
-        'message' => 'required|string|max:1000',
+        'message'    => 'nullable|string|max:1000', // テキストは任意
+        'photos.*'   => 'nullable|image|max:5120',  // 1ファイル 5MB 上限
     ]);
 
     $trade = Trade::findOrFail($id);
 
-    // 参加者チェック（取引の user_id または stylist の user_id であること）
+    // 参加者チェック（取引に関わっている人のみ送信可能）
     if (!in_array(auth()->id(), [$trade->user_id, $trade->stylist->user_id])) {
         abort(403, 'この取引に参加していません');
     }
 
+        // ファイル保存処理
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('trade_messages', 'public');
+        }
+
+    // 保存
     $message = TradeMessage::create([
         'trade_id' => $trade->id,
         'user_id'  => auth()->id(),
-        'message'  => $request->message,
+        'message'  => $request->message ?? '',
     ]);
 
-    return response()->json([
-        'success' => true,
-        'message' => $message->message,
-        'user'    => $message->user->nickname ?? $message->user->name,
-        'time'    => $message->created_at->diffForHumans(),
-        'user_id' => $message->user_id,
+        // 複数画像保存
+        $photos = [];
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $file) {
+                $path = $file->store('trade_messages', 'public');
+                $photo = $message->photos()->create([
+                    'photo_path' => $path,
+                ]);
+                $photos[] = asset('storage/' . $photo->photo_path);
+            }
+        }
+    
+        return response()->json([
+            'success' => true,
+            'message' => $message->message,
+            'user'    => $message->user->nickname ?? $message->user->name,
+            'time'    => $message->created_at->diffForHumans(),
+            'user_id' => $message->user_id,
+            'photos'  => $photos, // 複数URLを返す
+        ]);
+
+        $messages = TradeMessage::where('trade_id', $trade->id)
+        ->with('photos', 'user')
+        ->orderBy('created_at', 'asc') // 古い順
+        ->get();
+    }
+
+    // スタイリストが承認して完全終了
+    public function confirmComplete($id)
+    {
+    $trade = Trade::findOrFail($id);
+
+    if ($trade->stylist->user_id !== auth()->id()) {
+        abort(403, '権限がありません');
+    }
+
+    if (!$trade->completed_by_user) {
+        return back()->with('error', 'ユーザーから終了申請がまだ出されていません。');
+    }
+
+    $trade->completed_by_stylist = true;
+    $trade->status = 'completed'; // 完全終了ステータス
+    $trade->completed_at = now();   // 日時を保存
+    $trade->save();
+
+    // ✅ ユーザーに通知を送る
+    Notification::create([
+        'user_id' => $trade->user_id, // 通知を受け取るのはユーザー
+        'type'    => 'trade_completed',
+        'data'    => [
+        'message' => ($trade->stylist->user->nickname ?? 'スタイリスト') . ' さんとの取引が終了しました。',
+        'url'     => route('trades.show', $trade->id),
+    ],
+        'is_read' => false,
     ]);
+
+    return back()->with('success', '取引が終了しました！');
+    }
+
+    public function requestComplete($id)
+    {
+    $trade = Trade::findOrFail($id);
+
+    // ユーザー本人だけが終了申請できる
+    if ($trade->user_id !== auth()->id()) {
+        abort(403, '権限がありません');
+    }
+
+    // すでに終了申請していたら弾く
+    if ($trade->completed_by_user) {
+        return back()->with('error', 'すでに取引終了を申請済みです');
+    }
+
+    // フラグを更新
+    $trade->completed_by_user = true;
+    $trade->save();
+
+    // 通知をスタイリストに送る
+    Notification::create([
+        'user_id' => $trade->stylist->user_id, // スタイリストに通知
+        'type'    => 'trade_complete_request',
+        'data'    => [
+            'from_user' => $trade->user->nickname ?? $trade->user->name,
+            'message'   => ($trade->user->nickname ?? 'ユーザー') . ' さんが取引終了の申請をしました。',
+            'trade_id'  => $trade->id,
+            'url'       => route('trades.show', $trade->id),
+        ],
+        'is_read' => false,
+    ]);
+
+    return back()->with('success', '取引終了を申請しました');
     }
 
 

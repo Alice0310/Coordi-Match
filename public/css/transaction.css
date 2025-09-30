@@ -53,6 +53,7 @@
   .btn-secondary {
     background: #6c757d;
     color: #fff;
+    text-decoration: none;
   }
   
   .btn-secondary:hover {
@@ -112,7 +113,7 @@
   
   /* メッセージリスト */
   .message-list {
-    max-height: 400px;       /* スクロール可能にする */
+    max-height: 500px;       /* スクロール可能にする */
     overflow-y: auto;
     margin-bottom: 15px;
     padding-right: 10px;
@@ -190,3 +191,20 @@
   #message-section button:hover {
     background: #0056b3;
   }
+
+  .custom-file-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.2s;
+}
+
+.custom-file-label:hover {
+    background-color: #e0e0e0;
+}

@@ -45,3 +45,37 @@
     justify-content: center;
     cursor: pointer;
 }
+
+.cloth-item {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+}
+
+.cloth-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.remove-btn:hover {
+  background: rgba(255,0,0,0.8);
+}

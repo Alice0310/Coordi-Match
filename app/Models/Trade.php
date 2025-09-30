@@ -10,6 +10,10 @@ class Trade extends Model
         'user_id', 'stylist_id', 'status'
     ];
 
+    protected $casts = [
+        'completed_at' => 'datetime',
+    ];
+
     public function stylist()
     {
         return $this->belongsTo(Stylist::class);

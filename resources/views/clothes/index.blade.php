@@ -19,7 +19,7 @@
         <!-- + ボタン -->
         <div class="add-photo">+</div>
         <input type="file" id="photos" name="photos[]" accept="image/*" multiple style="display:none;">
-        <button type="submit">登録</button>
+        <button type="submit">保存</button>
     </form>
 
     <!-- エラーメッセージ -->
@@ -31,11 +31,16 @@
     <div class="clothes-list">
         @foreach($clothes as $cloth)
             <div class="cloth-item">
-                <img src="{{ asset('storage/'.$cloth->photo_path) }}" alt="服" width="120">
+                <img src="{{ asset('storage/'.$cloth->photo_path) }}" alt="服">
+                
+                <form action="{{ route('clothes.destroy', $cloth->id) }}" method="POST" class="delete-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="remove-btn">×</button>
+                </form>
             </div>
         @endforeach
     </div>
-</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>

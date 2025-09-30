@@ -10,6 +10,7 @@ class TradeMessage extends Model
         'trade_id',
         'user_id',
         'message',
+        'photo_path',
     ];
 
     public function trade()
@@ -20,5 +21,10 @@ class TradeMessage extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(TradeMessagePhoto::class);
     }
 }
