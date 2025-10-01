@@ -116,6 +116,7 @@
     background-color: #007bff;
     color: #fff;
     border: none;
+    border-radius: 5px;
   }
   
   .btn-secondary {
@@ -141,10 +142,21 @@
     border-radius: 5px;
   }
   .comment-item {
-    margin-top: 15px;
-    padding: 10px;
-    background: #f9f9f9;
-    border-radius: 5px;
+    display: flex;
+    justify-content: space-between; /* 左右に分ける */
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .comment-left {
+    flex: 1; /* 左側を広げる */
+  }
+
+  .comment-right {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 時間と削除ボタンの間隔 */
   }
   
   .sns-links a {
@@ -224,4 +236,26 @@
   }
   .btn-danger:hover {
     background: #c62828;
+  }
+
+  .favorite-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .favorite-count {
+    color: #fff;
+    font-weight: bold;
+    padding: 2px 6px;
+  }
+  .favorite-btn.active {
+    background-color: #f08080;
+    color: #fff;
+  }
+
+  .time{
+    font-size: 0.8em;
+    color: #888;
+    white-space: nowrap;
   }

@@ -36,4 +36,15 @@ class Stylist extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // app/Models/Stylist.php
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function isFavoritedBy($userId)
+    {
+        return $this->favorites()->where('user_id', $userId)->exists();
+    }
 }

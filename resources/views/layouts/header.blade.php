@@ -50,7 +50,7 @@
                 </a>
                 </li>
                 <li><a href="#"><span class="icon">✅</span></a></li>
-                <li><a href="#"><span class="icon">⭐ 気になる</span></a></li>
+                <li><a href="{{ route('favorites.index') }}"><span class="icon">⭐ 気になる</span></a></li>
             </ul>
         @endauth
     </nav>

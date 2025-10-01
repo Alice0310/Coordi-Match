@@ -72,7 +72,12 @@
     @endif
 
         <!-- 気になる と コメント は常に表示 -->
-        <button type="button" class="btn btn-secondary favorite-btn">気になる</button>
+        <button type="button" 
+        class="btn btn-secondary favorite-btn {{ $stylist->isFavoritedBy(auth()->id()) ? 'active' : '' }}" 
+        data-stylist-id="{{ $stylist->id }}">
+            気になる
+            <span id="favorite-count">{{ $stylist->favorites()->count() }}</span>
+        </button>
         <button type="button" class="btn btn-outline comment-btn">コメント</button>
         </div>
 
@@ -114,19 +119,23 @@
         <!-- 既存コメント一覧 -->
         @foreach($stylist->comments ?? [] as $comment)
             <div class="comment-item">
-                <strong>{{ $comment->user->name }}</strong>: {{ $comment->body }}
+                <div class="comment-left">
+                    <strong>{{ $comment->user->name }}</strong>: {{ $comment->body }}
+                </div>
 
-                <!-- スタイリスト本人だけに削除ボタンを表示 -->
-                @if(auth()->check() && auth()->id() === $stylist->user_id)
-                    <button type="button" 
-                            class="btn btn-sm btn-danger delete-btn" 
-                            data-id="{{ $comment->id }}">
-                        削除
-                    </button>
-                @endif
+                <div class="comment-right">
+                    <span class="time">{{ $comment->created_at->diffForHumans() }}</span>
+
+                    @if(auth()->check() && auth()->id() === $stylist->user_id)
+                        <button type="button" 
+                                class="btn btn-sm btn-danger delete-btn" 
+                                data-id="{{ $comment->id }}">
+                            削除
+                        </button>
+                    @endif
+                </div>
             </div>
         @endforeach
-        </div>
 
         <!-- コメント削除確認モーダル -->
         <div id="deleteConfirmModal" class="modal">
@@ -225,6 +234,27 @@ $('#deleteConfirmModal').on('click', function(e) {
   if (e.target === this) {
     $(this).removeClass('show');
   }
+});
+
+$('.favorite-btn').on('click', function() {
+    const $btn = $(this);
+    const stylistId = $btn.data('stylist-id');
+
+    $.post(`/favorites/${stylistId}/toggle`, {
+        _token: '{{ csrf_token() }}'
+    })
+    .done(function(res) {
+        $btn.find('.favorite-count').text(res.count);
+
+        if(res.status === 'added'){
+            $btn.addClass('active').text('気になる').append(`<span class="favorite-count">${res.count}</span>`);
+        } else {
+            $btn.removeClass('active').text('気になる').append(`<span class="favorite-count">${res.count}</span>`);
+        }
+    })
+    .fail(function() {
+        alert('エラーが発生しました');
+    });
 });
 
   

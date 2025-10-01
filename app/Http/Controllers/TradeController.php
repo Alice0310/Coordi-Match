@@ -83,8 +83,9 @@ class TradeController extends Controller
         return response()->json([
             'success' => true,
             'message' => '取引が開始されました！',
-            'html'    => view('transactions.partials.message_section', compact('trade', 'messages'))->render()
-    ]);
+            'html'    => view('transactions.partials.message_section', compact('trade','messages'))->render()
+                  . view('transactions.partials.message_form', compact('trade'))->render()
+    ], 200, [], JSON_UNESCAPED_UNICODE); // ← JSONで返す
     }
 
     public function sendMessage(Request $request, $id)
@@ -205,6 +206,35 @@ class TradeController extends Controller
     ]);
 
     return back()->with('success', '取引終了を申請しました');
+    }
+
+    public function index()
+    {
+    $userId = auth()->id();
+
+    $ongoingTrades = \App\Models\Trade::where(function($q) use ($userId) {
+            $q->where('user_id', $userId)
+              ->orWhereHas('stylist', function($q) use ($userId) {
+                  $q->where('user_id', $userId);
+              });
+        })
+        ->whereIn('status', ['pending', 'approved']) // 進行中
+        ->with(['stylist.user', 'user'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $completedTrades = \App\Models\Trade::where(function($q) use ($userId) {
+            $q->where('user_id', $userId)
+              ->orWhereHas('stylist', function($q) use ($userId) {
+                  $q->where('user_id', $userId);
+              });
+        })
+        ->where('status', 'completed') // 完了
+        ->with(['stylist.user', 'user'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('trades.index', compact('ongoingTrades', 'completedTrades'));
     }
 
 

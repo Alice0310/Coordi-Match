@@ -10,6 +10,7 @@ use App\Http\Controllers\TradeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ClothesController;
+use App\Http\Controllers\FavoriteController;
 
 Route::get('/', function () {
     return view('index');
@@ -136,3 +137,15 @@ Route::post('/trades/{id}/complete-request', [TradeController::class, 'requestCo
     ->name('trades.requestComplete');
 
 Route::get('/stylists/{id}', [StylistController::class, 'show'])->name('stylists.show');
+
+// 自分の取引一覧
+Route::get('/trades', [App\Http\Controllers\TradeController::class, 'index'])
+    ->name('trades.index')
+    ->middleware('auth');
+
+Route::post('/favorites/{stylist}/toggle', [FavoriteController::class, 'toggle'])
+    ->name('favorites.toggle')
+    ->middleware('auth');
+
+// 気になる一覧
+Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
