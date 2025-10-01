@@ -13,8 +13,8 @@
     <p>スタイリスト: {{ $trade->stylist->user->nickname ?? '不明' }}</p>
     <p>ユーザー: {{ $trade->user->nickname ?? $trade->user->name ?? '不明' }}</p>
 
-    {{-- ログインユーザーがスタイリスト本人なら表示 --}}
-    @if(auth()->id() === $trade->stylist->user_id)
+        {{-- ログインユーザーがスタイリスト本人 && 取引が未終了のときだけ表示 --}}
+    @if(auth()->id() === $trade->stylist->user_id && $trade->status !== 'completed')
         <a href="{{ route('clothes.user', $trade->user->id) }}" class="btn btn-secondary">
             このユーザーの持ち服一覧を見る
         </a>
@@ -117,19 +117,20 @@ $(function() {
     e.preventDefault();
 
     $.post($(this).attr('action'), $(this).serialize())
-      .done(function (res) {
+    .done(function (res) {
+      if(res.success){
         $('#approveModal').removeClass('show');
         $('.approve-btn').remove();
-        // メッセージ欄をレスポンスで置き換え
-        $('#message-section').replaceWith(res.html);
+        // メッセージ欄を更新（中身を差し替え）
+        $('#message-section').html(res.html);
 
-        $('#alert-area').html(`
-          <div class="alert alert-success">${res.message}</div>
-        `);
-      })
-      .fail(function () {
-        alert('承認に失敗しました。');
-      });
+        $('#alert-area').html(`<div class="alert alert-success">${res.message}</div>`);
+      }
+    })
+    .fail(function (xhr) {
+      console.error(xhr.responseText);
+      alert('承認に失敗しました。');
+    });
   });
 
     // approveModal を閉じる

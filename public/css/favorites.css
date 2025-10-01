@@ -1,0 +1,88 @@
+.stylist-list {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .stylist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .stylist-card {
+    display: block;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.2s ease;
+    text-decoration: none;   
+    color: inherit;
+    cursor: pointer;
+  }
+  
+  .stylist-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stylist-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .no-photo {
+    width: 100%;
+    height: 180px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .stylist-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+  }
+  
+  .appeal {
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .tags {
+    margin: 10px 0;
+  }
+  
+  .tag {
+    background: #f0f0f0;
+    color: #333;
+    padding: 5px 10px;
+    margin: 3px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    display: inline-block;
+  }
+  
+  .sns-links a {
+    margin: 0 5px;
+    color: #0077cc;
+    text-decoration: none;
+  }
+  
+  .sns-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .price {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1.1em;
+  }

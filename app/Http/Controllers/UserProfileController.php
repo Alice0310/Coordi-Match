@@ -24,7 +24,7 @@ class UserProfileController extends Controller
         $request->validate([
             'nickname' => 'nullable|string|max:50',
             'description' => 'nullable|string|max:500',
-            'profile_image' => 'nullable|image|max:2048', // name属性に合わせる
+            'profile_image' => 'nullable|image|max:5120', // name属性に合わせる
         ]);
 
         $user->nickname = $request->nickname;
