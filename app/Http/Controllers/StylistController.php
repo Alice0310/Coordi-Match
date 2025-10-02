@@ -17,7 +17,17 @@ class StylistController extends Controller
     public function detail($id)
     {
         $stylist = Stylist::findOrFail($id);
-        return view('stylist.detail', compact('stylist'));
+
+        $existingTrade = null;
+        if (auth()->check()) {
+            $existingTrade = \App\Models\Trade::where('stylist_id', $stylist->id)
+                ->where('user_id', auth()->id())
+                ->whereIn('status', ['pending', 'approved']) // 
+                ->latest()
+                ->first();
+        }
+    
+        return view('stylist.detail', compact('stylist', 'existingTrade'));
     }
 
     public function become()

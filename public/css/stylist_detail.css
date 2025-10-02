@@ -259,3 +259,12 @@
     color: #888;
     white-space: nowrap;
   }
+
+  .btn-success {
+    background-color: #28a745; /* 緑 */
+    color: #fff;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+  }

@@ -64,12 +64,23 @@
             <!-- ボタン -->
         <div class="action-buttons">
         @if($stylist->user_id === auth()->id())
-        <!-- 自分のスタイリストなら編集ボタン -->
-        <a href="{{ route('become.stylist') }}" class="btn btn-primary apply-btn">スタイリスト編集</a>
-    @else
-        <!-- 他人のスタイリストなら取引手続き申請ボタン -->
-        <button type="button" class="btn btn-primary apply-btn">取引手続き申請</button>
-    @endif
+            {{-- 自分のスタイリストなら編集ボタン --}}
+            <a href="{{ route('become.stylist') }}" class="btn btn-primary">スタイリスト編集</a>
+        @else
+            {{-- 取引申請系 --}}
+            @if($existingTrade)
+                @if($existingTrade->status === 'pending')
+                    <button type="button" class="btn btn-secondary" disabled>申請中</button>
+                @elseif($existingTrade->status === 'approved')
+                    <a href="{{ route('trades.show', $existingTrade->id) }}" class="btn btn-success">
+                        取引画面へ
+                    </a>
+                @endif
+            @else
+                {{-- まだ申請がなければ申請ボタン --}}
+                <button type="button" class="btn btn-primary apply-btn">取引手続き申請</button>
+            @endif
+        @endif
 
         <!-- 気になる と コメント は常に表示 -->
         <button type="button" 
