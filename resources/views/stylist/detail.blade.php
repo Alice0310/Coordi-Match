@@ -251,7 +251,7 @@ $('.favorite-btn').on('click', function() {
     const $btn = $(this);
     const stylistId = $btn.data('stylist-id');
 
-    $.post(`/favorites/${stylistId}/toggle`, {
+    $.post(`/project/favorites/${stylistId}/toggle`, {
         _token: '{{ csrf_token() }}'
     })
     .done(function(res) {
