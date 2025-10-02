@@ -12,9 +12,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ClothesController;
 use App\Http\Controllers\FavoriteController;
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', fn() => view('index'))->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -149,3 +147,5 @@ Route::post('/favorites/{stylist}/toggle', [FavoriteController::class, 'toggle']
 
 // 気になる一覧
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+
+Route::get('/trades/active-count', [TradeController::class, 'activeCount'])->name('trades.activeCount');

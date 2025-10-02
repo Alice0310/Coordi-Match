@@ -237,5 +237,18 @@ class TradeController extends Controller
     return view('trades.index', compact('ongoingTrades', 'completedTrades'));
     }
 
+    public function activeCount()
+    {
+    $count = \App\Models\Trade::where(function($q) {
+            $q->where('user_id', auth()->id())
+              ->orWhereHas('stylist', function($q2){
+                  $q2->where('user_id', auth()->id());
+              });
+        })
+        ->whereIn('status', ['pending','approved']) // 申請中・進行中を対象
+        ->count();
+
+    return response()->json(['count' => $count]);
+    }
 
 }

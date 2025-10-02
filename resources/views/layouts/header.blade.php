@@ -9,7 +9,6 @@
         {{-- ゲスト用ナビ --}}
         @guest
             <ul id="nav-guest">
-                <li><a href="#">スタイリスト一覧</a></li>
                 <li><a href="{{ route('register') }}">会員登録</a></li>
                 <li><a href="{{ route('login') }}">ログイン</a></li>
             </ul>
@@ -49,7 +48,11 @@
                     @endif
                 </a>
                 </li>
-                <li><a href="#"><span class="icon">✅</span></a></li>
+                <li>
+                    <a href="{{ route('trades.index') }}">
+                        <span class="icon">✅</span>
+                    </a>
+                </li>
                 <li><a href="{{ route('favorites.index') }}"><span class="icon">⭐ 気になる</span></a></li>
             </ul>
         @endauth

@@ -14,8 +14,6 @@
     <!-- ソーシャルログインボタン -->
     <div class="social-buttons">
         <button class="google">Googleでログイン</button>
-        <button class="facebook">Facebookでログイン</button>
-        <button class="line">LINEでログイン</button>
     </div>
 
     <div class="divider">または</div>
