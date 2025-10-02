@@ -231,7 +231,7 @@ $('.trade-form').on('submit', function (e) {
 // コメント削除ボタンを押したらモーダルを表示
 $('.delete-btn').on('click', function() {
   const commentId = $(this).data('id');
-  $('#deleteForm').attr('action', '/comments/' + commentId);
+  $('#deleteForm').attr('action', '/project/comments/' + commentId);
   $('#deleteConfirmModal').addClass('show');
 });
 
