@@ -131,7 +131,7 @@
         @foreach($stylist->comments ?? [] as $comment)
             <div class="comment-item">
                 <div class="comment-left">
-                    <strong>{{ $comment->user->name }}</strong>: {{ $comment->body }}
+                    <strong>{{ $comment->user->nickname }}</strong>: {{ $comment->body }}
                 </div>
 
                 <div class="comment-right">
