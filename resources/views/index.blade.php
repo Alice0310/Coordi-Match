@@ -25,4 +25,33 @@
         </div>
     </div>
 </section>
+
+{{-- How To セクション --}}
+<section class="howto">
+    <div class="container">
+        <h2>ご利用の流れ</h2>
+        <div class="steps">
+            <div class="step">
+                <span class="step-number">1</span>
+                <h3>会員登録</h3>
+                <p>メールアドレスとパスワードで簡単に登録できます。</p>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <h3>プロフィール設定</h3>
+                <p>プロフィールや持ち服を登録して、準備完了！</p>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <h3>スタイリストを探す</h3>
+                <p>ジャンルや雰囲気からあなたに合うスタイリストを見つけましょう。</p>
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <h3>取引を開始</h3>
+                <p>取引申請をして、チャットで相談しながらコーディネート依頼！</p>
+            </div>
+        </div>
+    </div>
+</section>
 @endsection

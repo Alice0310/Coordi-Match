@@ -102,3 +102,47 @@
     background: #333;
     color: #fff;
   }
+
+  .howto {
+    background: #fafafa;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .howto h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  .steps {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .step {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+  
+  .step:hover {
+    transform: translateY(-5px);
+  }
+  
+  .step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    background: #333;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
