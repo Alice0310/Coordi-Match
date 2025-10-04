@@ -77,7 +77,6 @@
         <!-- 送信ボタン -->
         <div class="form-actions">
             <button type="submit" class="btn-primary">スタイリストになる</button>
-            <button type="button" class="btn-secondary">下書き保存</button>
         </div>
     </form>
 </div>
