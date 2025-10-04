@@ -22,4 +22,14 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # ============================
+    # 画像アップロードサイズ制限を緩和
+    # ============================
+    php_value upload_max_filesize 20M
+    php_value post_max_size 25M
+    php_value memory_limit 256M
+    php_value max_file_uploads 20
+    php_value max_execution_time 300
+    php_value max_input_time 300
 </IfModule>
