@@ -9,7 +9,7 @@
 @section('content')
 <section class="hero">
     <div class="hero-inner">
-        <h1 class="hero-title">CordiMatch</h1>
+        <h1 class="hero-title">Coordi Match</h1>
         <p class="hero-subtitle">コーディネートをもっと楽しく、もっと身近に。</p>
         <div class="hero-buttons">
             {{-- 未ログイン時 --}}
